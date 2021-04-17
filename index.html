@@ -1,45 +1,8 @@
-<!-- //#149674186
-//WEB222 NHH
-//Jacob Wiradharma -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Web Wildlife Walk</title>
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/normalize.css@8.0.1/normalize.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
-    />
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css"> -->
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
-
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
-
-
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
-    />
-
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" />
+    <title>Web Wildlife Walk v3.0</title>
 
     <meta name="description" content="WEB222 Wildlife Assignment" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,23 +13,61 @@
       rel="icon"
       type="image/x-icon"
     />
+
+    <!-- Normalize CSS across browsers -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/normalize.css@8.0.1/normalize.css"
+    />
+
+    <!-- Water CSS theme, see https://watercss.kognise.dev/ -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css"
+    />
+
+    <!-- Leaflet Map Stylesheet, see https://leafletjs.com/examples/quick-start/ -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+
+    <!-- Leaflet Marker Cluster, see https://github.com/Leaflet/Leaflet.markercluster -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
+    />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+
+    <!-- Our site's styles -->
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
 
-  <body onload="window.start()">
-  
-
+  <body>
     <header>
-      <h1>Web Wildlife Walk V2.0</h1>
+      <nav>
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <a href="add-observation.html"><i class="fas fa-plus"></i> Add Observation</a>
+      </nav>
+
+      <h1>Web Wildlife Walk v3.0</h1>
       <div id="hero">
         <img
-          src="images/raimond-klavins-j773Th2GElc-unsplash.jpg"
-          alt="Whyte Lake Trail, West Vancouver Canada"
+          src="images/jeremy-hynes-1AfVnCavqrQ-unsplash.jpg"
+          alt="Dark-eyed junco coming in for a meal, Ontario, Canada"
         />
         <h2 class="quote">
-          <span>
-            <!--cite="https://www.goodreads.com/quotes/8225343-everywhere-is-within-walking-distance-if-you-have-the-time"-->
-            "Beauty surrounds if you have an eye for it"<br />
-            &mdash;Jacob Wiradharma</span
+          <span
+            cite="https://www.goodreads.com/quotes/8225343-everywhere-is-within-walking-distance-if-you-have-the-time"
+            >"I can't imagine anything more important<br> than air, water, soil, energy and biodiversity.<br>
+             These are the things that keep us alive."<br> &mdash;David Suzuki</span
           >
         </h2>
       </div>
@@ -98,36 +99,47 @@
 
       <section>
         <h2>Map</h2>
-        <!-- Leaflet Map will get drawn within this div element -->
-        <div id="mapid"#mapid { height: 180px; }>
+        <!-- TODO - create the search form -->
+        <!-- Search Form -->
+        <form action="#" method="GET" id=searchForm>
 
-        <div id="map-container"></div>
+          <script type = "/js" src="search.js"></script>  
+          
+          <input type="text" id="mapSearchtext" name="mapSearchtext" placeholder="1750 Finch Ave E, North York, ON, CA">
+
+          <button type="submit" id="submitButton" > 
+            <i class="fas fa-search" id="magnifyingIcon"></i>
+            <span id="searchText">Search</span>
+          </button>
+
+        </form>
+
+        <!-- Leaflet Map will get drawn within this div element -->
+        <div id="map" class="loading">
+          <div id="map-container"></div>
+        </div>
       </section>
 
       <!-- Data Table -->
-      <section>
+      <section id="observations">
         <!-- This span needs to be populated at runtime with JavaScript -->
-        <h2 id="data-title">Wildlife Observations: <span></span></h2>
+        <h2 id="observation-title">Wildlife Observations: <span></span></h2>
         <div class="buttons">
           <button id="show-all">All Species</button>
           <button id="show-native">Only Native Species</button>
           <button id="show-introduced">Only Introduced Species</button>
         </div>
         <div id="legend">
-          <span>
-            <i class="fas fa-leaf">Native</i>
-          </span>
-          <span>
-            <i class="fas fa-frog">Introduced</i>
-          </span>
-          <span>
-            <i class="fas fa-radiation-alt">Threatened</i>
-          </span>
-          <span>
-            <i class="fas fa-skull-crossbones">Endangered</i>
-          </span>
+          <span><i class="fas fa-leaf" title="Native"></i> Native</span>
+          <span><i class="fas fa-frog" title="Introduced"></i> Introduced</span>
+          <span><i class="fas fa-radiation-alt" title="Threatened"></i> Threatened</span>
+          <span><i class="fas fa-skull-crossbones" title="Endangered"></i> Endangered</span>
         </div>
-        <div id="observation-cards">
+        <div id="observation-cards"></div>
+
+        <div>
+          <h2>New Observations</h2>
+          <p>Found a new observation? <a href="add-observation.html">Add it to the list</a> and share it with the world.</p>
         </div>
       </section>
     </main>
@@ -135,12 +147,24 @@
     <footer>
       <a href="#">Back to top &#11014;&#65039;</a>
     </footer>
-    <script src="js/simple-map.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/observations.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js "></script>
+
+    <!-- Leaflet Map JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Leaflet Marker Cluster JavaScript -->
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+    <!-- Our simplified Map object -->
+    <script src="js/simple-map.js"></script>
+    <!-- Load our sample observation data -->
+    <script src="js/data.js"></script>
+    <!-- The JS that processes the Observation data -->
+    <script src="js/observations.js"></script>
+    <!-- The JS that creates the UI elements -->
+    <script src="js/ui.js"></script>
+    <!-- Our search logic -->
+    <script src="js/search.js"></script>
+
+    <!-- Our site's main JavaScript to be run on startup -->
+    <script src="js/app.js"></script>
   </body>
 </html>

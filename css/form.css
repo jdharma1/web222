@@ -1,0 +1,16 @@
+/**
+ * Styles for the add-observation.html page 
+ */
+
+ .required {
+     color: red;
+     font-weight: bold;
+ }
+
+ .slightlyLonger {
+     width: 60%;
+ }
+
+ legend {
+     font-weight: bold;
+ }

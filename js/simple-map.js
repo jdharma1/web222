@@ -5,7 +5,7 @@
  * Uses the provided (lat, lng) location as its centre, or the
  * Seneca Newnham campus by default if no coordinates are given.
  *
- * @param {string} id the id of the element that will contain the map (e.g., 'map-container')
+ * @param {string} id the id of the element that will contain the map (e.g., '#map-container')
  * @param {number} lat optional latitude of the centre of the map (defaults to 43.7955)
  * @param {number} lng optional longitude of the centre of the map (defaults to -79.3496)
  * @param {number} zoomLevel optional zoom level of the map (defaults to 15)
@@ -25,19 +25,19 @@ function SimpleMap(id, lat = 43.7955, lng = -79.3496, zoomLevel = 15) {
     }
   ).addTo(map);
 
-  // Create a cluster marker group, so multiple markers close to each other are joined.
   const markers = L.markerClusterGroup();
   map.addLayer(markers);
 
   // Store these properties on the instance
   this.map = map;
   this.markers = markers;
+  this.zoomLevel = zoomLevel;
 }
 
 /**
  * Add a clickable marker and popup to the map that displays the given info.
  *
- * @param {Object} observation the observation for which we want to add a marker
+ * @param {Object} observation the observation for which we want to create the marker
  */
 SimpleMap.prototype.addObservation = function (observation) {
   const { id, coords, name, photoUrl } = observation;
@@ -63,3 +63,13 @@ SimpleMap.prototype.clear = function () {
   this.markers = L.markerClusterGroup();
   map.addLayer(this.markers);
 };
+
+/**
+ * Move the centre of the map to a new location, removing any existing markers.
+ */
+SimpleMap.prototype.setLocation = function (lat, lng) {
+  // Clear the current markers, if any
+  this.clear();
+  // Update the position of the map's centre
+  this.map.setView([lat, lng], this.zoomLevel);
+}

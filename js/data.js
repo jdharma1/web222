@@ -40085,7 +40085,7 @@ window.data = {
               },
             ],
           },
-          previous_observation_: {
+          previous_observation_taxon: {
             photos_locked: true,
             taxon_schemes_count: 2,
             ancestry: "48460",
