@@ -43,7 +43,11 @@
     />
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
+      crossorigin="anonymous"
+    />
 
     <!-- Our site's styles -->
     <link rel="stylesheet" href="css/common.css" />
@@ -54,7 +58,9 @@
     <header>
       <nav>
         <a href="/"><i class="fas fa-home"></i> Home</a>
-        <a href="add-observation.html"><i class="fas fa-plus"></i> Add Observation</a>
+        <a href="add-observation.html"
+          ><i class="fas fa-plus"></i> Add Observation</a
+        >
       </nav>
 
       <h1>Web Wildlife Walk v3.0</h1>
@@ -66,8 +72,10 @@
         <h2 class="quote">
           <span
             cite="https://www.goodreads.com/quotes/8225343-everywhere-is-within-walking-distance-if-you-have-the-time"
-            >"I can't imagine anything more important<br> than air, water, soil, energy and biodiversity.<br>
-             These are the things that keep us alive."<br> &mdash;David Suzuki</span
+            >"I can't imagine anything more important<br />
+            than air, water, soil, energy and biodiversity.<br />
+            These are the things that keep us alive."<br />
+            &mdash;David Suzuki</span
           >
         </h2>
       </div>
@@ -101,17 +109,20 @@
         <h2>Map</h2>
         <!-- TODO - create the search form -->
         <!-- Search Form -->
-        <form action="#" method="GET" id=searchForm>
+        <form action="#" method="GET" id="searchForm">
+          <script type="/js" src="search.js"></script>
 
-          <script type = "/js" src="search.js"></script>  
-          
-          <input type="text" id="mapSearchtext" name="mapSearchtext" placeholder="1750 Finch Ave E, North York, ON, CA">
+          <input
+            type="text"
+            id="mapSearchtext"
+            name="mapSearchtext"
+            placeholder="1750 Finch Ave E, North York, ON, CA"
+          />
 
-          <button type="submit" id="submitButton" > 
+          <button type="submit" id="submitButton">
             <i class="fas fa-search" id="magnifyingIcon"></i>
             <span id="searchText">Search</span>
           </button>
-
         </form>
 
         <!-- Leaflet Map will get drawn within this div element -->
@@ -132,14 +143,24 @@
         <div id="legend">
           <span><i class="fas fa-leaf" title="Native"></i> Native</span>
           <span><i class="fas fa-frog" title="Introduced"></i> Introduced</span>
-          <span><i class="fas fa-radiation-alt" title="Threatened"></i> Threatened</span>
-          <span><i class="fas fa-skull-crossbones" title="Endangered"></i> Endangered</span>
+          <span
+            ><i class="fas fa-radiation-alt" title="Threatened"></i>
+            Threatened</span
+          >
+          <span
+            ><i class="fas fa-skull-crossbones" title="Endangered"></i>
+            Endangered</span
+          >
         </div>
         <div id="observation-cards"></div>
 
         <div>
           <h2>New Observations</h2>
-          <p>Found a new observation? <a href="add-observation.html">Add it to the list</a> and share it with the world.</p>
+          <p>
+            Found a new observation?
+            <a href="add-observation.html">Add it to the list</a> and share it
+            with the world.
+          </p>
         </div>
       </section>
     </main>
